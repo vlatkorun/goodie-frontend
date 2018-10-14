@@ -1,28 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import NotificationsSystem from 'reapop';
+import theme from 'reapop-theme-bootstrap';
 
-class App extends Component {
-  render() {
+import Routes from './Routes';
+
+import Navigation from './components/header/Navigation';
+
+const App = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+        <div>
+            <Navigation />
+            <Routes />
+            <NotificationsSystem theme={theme}/>
+        </div>
+    )
+};
 
 export default App;

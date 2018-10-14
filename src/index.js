@@ -1,12 +1,33 @@
+import './bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ConnectedRouter } from 'connected-react-router';
+import { setLanguage } from 'redux-polyglot';
+
+import { store, persistor } from './store';
+import history from './createHistory';
+
+import { detectLanguage, translations } from './trans';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const lang = detectLanguage();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+store.dispatch(setLanguage(lang, translations(lang)));
+
+const Root = () => (
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <ConnectedRouter history={history}>
+                <App />
+            </ConnectedRouter>
+        </PersistGate>    
+    </Provider>
+);
+
+ReactDOM.render(<Root />, document.getElementById('root'));
+
 serviceWorker.unregister();
